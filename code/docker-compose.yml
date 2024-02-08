@@ -4,6 +4,7 @@ services:
   # this is our kafka cluster.
   kafka-cluster:
     image: landoop/fast-data-dev:cp3.3.0
+    platform: linux/amd64
     environment:
       ADV_HOST: 127.0.0.1         # Change to 192.168.99.100 if using Docker Toolbox
       RUNTESTS: 0                 # Disable Running tests so the cluster starts faster
@@ -18,6 +19,7 @@ services:
   # This configuration allows you to start elasticsearch
   elasticsearch:
     image: itzg/elasticsearch:2.4.3
+    platform: linux/amd64
     environment:
       PLUGINS: appbaseio/dejavu
       OPTS: -Dindex.number_of_shards=1 -Dindex.number_of_replicas=0
