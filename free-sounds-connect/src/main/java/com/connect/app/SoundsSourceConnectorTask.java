@@ -1,11 +1,13 @@
 package com.connect.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
+import com.connect.app.SourceSoundsFreeUtils.ResultItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,11 @@ public class SoundsSourceConnectorTask extends SourceTask {
     private Schema recordSchema;
 
     @Override
+    public String version() {
+        return PropertiesUtil.getConnectorVersion();
+    }
+
+    @Override
     public void start(Map<String, String> properties) {
         config = new SoundsSourceConnectorConfig(properties);
         taskSleepTimeout = config.getInt(INTERVAL_CONFIG);
@@ -54,17 +61,37 @@ public class SoundsSourceConnectorTask extends SourceTask {
     public List<SourceRecord> poll() throws InterruptedException {
         Thread.sleep(taskSleepTimeout);
         List<SourceRecord> records = new ArrayList<>();
-
         for (String source : sources) {
             log.info("Polling data from the source '" + source + "'");
-            records.add(new SourceRecord(
-                Collections.singletonMap("source", source),
-                Collections.singletonMap("offset", 0),
-                source, null, null, null,
-                recordSchema, createStruct(recordSchema)
-            ));
+            try {
+                List<ResultItem> results = SourceSoundsFreeUtils.fetch(source, apiKey);
+                for (ResultItem item : results) {
+                    records.add(new SourceRecord(
+                        Collections.singletonMap("source", source),
+                        Collections.singletonMap("offset", 0),
+                        source, null, null, null,
+                        recordSchema, createStruct(item)
+                    ));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return records;
+    }
+
+    private Struct createStruct(ResultItem item) {
+        Struct struct = new Struct(recordSchema);
+        struct.put(ID_COLUMN, item.getId());
+        struct.put(NAME_COLUMN, item.getName());
+        struct.put(TAGS_COLUMN, item.getTags());
+        struct.put(LICENSE_COLUMN, item.getLicense());
+        struct.put(USERNAME_COLUMN, item.getUsername());
+        return struct;
+    }
+
+    @Override
+    public void stop() {
     }
 
 }
