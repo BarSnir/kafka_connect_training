@@ -95,7 +95,9 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_PLUGIN_PATH: '/usr/share/java,/usr/share/confluent-hub-components'
+      CONNECT_PLUGIN_PATH: '/usr/share/java,/usr/share/confluent-hub-components,/usr/share/customs'
+    volumes:
+      - ./jars:/usr/share/customs
     command: > 
       bash -c "
       confluent-hub install --no-prompt jcustenborder/kafka-connect-twitter:0.3.34 && \

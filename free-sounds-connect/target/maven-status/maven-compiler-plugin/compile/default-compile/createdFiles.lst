@@ -1,0 +1,13 @@
+com/connect/app/App$SearchResponse.class
+com/connect/app/SourceSoundsFreeUtils$SearchResponse.class
+com/connect/app/NewPartitionsCheckerThread.class
+com/connect/app/SourceSoundsFreeUtils$ResultItem.class
+com/connect/app/SourceSoundsFreeUtils.class
+com/connect/app/SoundsSourceConnectorTask.class
+com/connect/app/SoundsSourceConnectorConfig.class
+com/connect/app/SourceSourceConnector.class
+com/connect/app/App$FreesoundSearchResponse.class
+com/connect/app/PropertiesUtil.class
+com/connect/app/App.class
+com/connect/app/App$ResultItem.class
+com/connect/app/SourceSoundsFreeUtils$FreesoundSearchResponse.class

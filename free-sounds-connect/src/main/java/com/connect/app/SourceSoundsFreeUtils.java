@@ -17,6 +17,7 @@ public class SourceSoundsFreeUtils {
     public static List<ResultItem> fetch(String param, String apiKey ) throws IOException {
         String SOUNDS_FREE_URL = "https://freesound.org/apiv2/search/text/?query="+param+"&token="+apiKey;
         // Configure the HTTP connection
+        System.out.print(SOUNDS_FREE_URL);
         URI uri = URI.create(String.format(SOUNDS_FREE_URL, param));
         URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

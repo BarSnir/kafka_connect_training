@@ -33,6 +33,7 @@ public class SoundsSourceConnectorTask extends SourceTask {
     private SoundsSourceConnectorConfig config;
     private int taskSleepTimeout;
     private String apiKey;
+    private String topic;
     private List<String> sources;
     private Schema recordSchema;
 
@@ -48,6 +49,7 @@ public class SoundsSourceConnectorTask extends SourceTask {
         apiKey = config.getString(API_KEY_CONFIG);
         String sourcesStr = config.getString(TERMS_LIST_CONFIG);
         sources = Arrays.asList(sourcesStr.split(","));
+        topic = config.getString(TOPIC_CONFIG);
         recordSchema = SchemaBuilder.struct()
             .field(ID_COLUMN, Schema.INT32_SCHEMA).required()
             .field(NAME_COLUMN, Schema.STRING_SCHEMA).required()
@@ -69,8 +71,12 @@ public class SoundsSourceConnectorTask extends SourceTask {
                     records.add(new SourceRecord(
                         Collections.singletonMap("source", source),
                         Collections.singletonMap("offset", 0),
-                        source, null, null, null,
-                        recordSchema, createStruct(item)
+                        topic, 
+                        null, 
+                        null,
+                        item.getId(),
+                        recordSchema,
+                        createStruct(item)
                     ));
                 }
             } catch (IOException e) {
