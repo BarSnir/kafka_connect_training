@@ -1,7 +1,7 @@
+/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/JokeSourceConnectorTask.java
 /Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/NewPartitionsCheckerThread.java
-/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/SourceSourceConnector.java
-/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/SourceSoundsFreeUtils.java
-/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/SoundsSourceConnectorConfig.java
+/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/JokeSourceConnector.java
+/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/JokeSourceConnectorConfig.java
 /Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/PropertiesUtil.java
-/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/SoundsSourceConnectorTask.java
+/Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/JokesUtils.java
 /Users/barsnir/Desktop/projects/kafka_connect_training/free-sounds-connect/src/main/java/com/connect/app/App.java
