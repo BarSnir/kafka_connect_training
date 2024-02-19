@@ -1,25 +1,41 @@
 package com.connect.app;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 
-import java.util.List;
+import org.apache.kafka.connect.data.Schema;
+import org.apache.kafka.connect.data.SchemaBuilder;
+import org.apache.kafka.connect.data.Struct;
 
-
+import com.connect.app.JokesUtils.JokeRandomResponse;
 
 public class App {
 
-    private static final String SOUNDS_FREE_URL = "https://freesound.org/apiv2/search/text/?query=piano&token=RrzwXe3my2LbmMoSBfei2ZE3BJrGns5gDBT4YUxo&size=50";  // Replace with your actual API endpoint
+    private static final String TYPE_COLUMN = "type";
+    private static final String SETUP_COLUMN = "setup";
+    private static final String PUNCHLINE_COLUMN = "punchline";
+    private static final String ID_COLUMN = "id";
+    private static Schema recordSchema;
+
     public static void main(String[] args) throws IOException {
         // Configure the HTTP connection
+        recordSchema = SchemaBuilder.struct()
+            .field(ID_COLUMN, Schema.INT32_SCHEMA).required()
+            .field(TYPE_COLUMN, Schema.STRING_SCHEMA).required()
+            .field(SETUP_COLUMN, Schema.STRING_SCHEMA).required()
+            .field(PUNCHLINE_COLUMN, Schema.STRING_SCHEMA).required()
+            .build();
         System.out.print(
-            SourceSoundsFreeUtils.fetch("strings", "RrzwXe3my2LbmMoSBfei2ZE3BJrGns5gDBT4YUxo")
+            createStruct(JokesUtils.fetch(), recordSchema)
         );
+    }
+
+    public static Struct createStruct(JokeRandomResponse item, Schema recordSchema) {
+        Struct struct = new Struct(recordSchema);
+        struct.put(ID_COLUMN, item.getId());
+        struct.put(TYPE_COLUMN, item.getSetup());
+        struct.put(SETUP_COLUMN, item.getPunchline());
+        struct.put(PUNCHLINE_COLUMN, item.getType());
+        return struct;
     }
 
 }

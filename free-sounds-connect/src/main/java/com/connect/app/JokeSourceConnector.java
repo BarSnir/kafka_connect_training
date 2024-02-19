@@ -14,14 +14,15 @@ import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;
 import org.apache.kafka.connect.util.ConnectorUtils;
 
-import static com.connect.app.SoundsSourceConnectorConfig.*;
+import static com.connect.app.JokeSourceConnectorConfig.*;
 
-public class SourceSourceConnector extends SourceConnector{
+public class JokeSourceConnector extends SourceConnector{
 
-    private final Logger log = LoggerFactory.getLogger(SourceSourceConnector.class);
+    private final Logger log = LoggerFactory.getLogger(JokeSourceConnector.class);
     private Map<String, String> originalProps;
-    private SoundsSourceConnectorConfig config;
+    private JokeSourceConnectorConfig config;
     private NewPartitionsCheckerThread checker;
+    
 
     @Override
     public String version() {
@@ -35,13 +36,13 @@ public class SourceSourceConnector extends SourceConnector{
 
     @Override
     public Class<? extends Task> taskClass() {
-        return SoundsSourceConnectorTask.class;
+        return JokeSourceConnectorTask.class;
     }
 
     @Override
     public void start(Map<String, String> originalProps) {
         this.originalProps = originalProps;
-        config = new SoundsSourceConnectorConfig(originalProps);
+        config = new JokeSourceConnectorConfig(originalProps);
         int monitorThreadTimeout = config.getInt(MONITOR_THREAD_TIMEOUT_CONFIG);
         checker = new NewPartitionsCheckerThread(context, monitorThreadTimeout);
         checker.start();
